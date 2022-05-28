@@ -27,12 +27,19 @@
 		$deger2 = pow((1+$vergi_faiz),$vade) - 1;
 		$taksit = $kredi * $deger1/$deger2;
 	/* Kredimizin aylık taksit tutarını hesaplıyoruz */
+	$toplam_faiz = "0";
+	$toplam_kredi = "0";
+	$toplam_anapara = "0";
+	$toplam_bsmv = "0";
+	$toplam_kkdf = "0";
+
 ?>
   				<table class="table table-bordered">
   					<tr>
   						<th>Kredi Tutarı</th>
   						<th>Kredi Vadesi</th>
   						<th>Kredi Faizi</th>
+						<th>Toplam Faiz</th>  
   						<th>BSMV</th>
   						<th>KKDF</th>
   						<th>Taksit Tutarı</th>
@@ -41,6 +48,7 @@
   						<td><?php echo number_format($kredi, 2, ',', '.');?></td>
   						<td><?php echo $vade;?></td>
   						<td><?php echo $faiz;?></td>
+  						<td><?php echo number_format($toplam_faiz, 2, ',', '.');?></td>
   						<td><?php echo $bsmv;?></td>
   						<td><?php echo $kkdf;?></td>
   						<td><?php echo number_format($taksit, 2, ',', '.');?></td>
@@ -51,7 +59,7 @@
   						<th>Dönem</th>
   						<th>Taksit Tutarı</th>
   						<th>Anapara</th>
-  						<th>Faiz</th>
+  						<th>Faiz</th>						  
   						<th>KKDF</th>
   						<th>BSMV</th>
   						<th>Kalan Anapara</th>
@@ -69,7 +77,7 @@
 	  							echo '<td>'.$row.'</td>';
 	  							echo '<td>'.number_format($taksit, 2, ',', '.').' TL</td>';
 	  							echo '<td>'.number_format($_anapara, 2, ',', '.').'</td>';
-	  							echo '<td>'.number_format($_faiz, 2, ',', '.').'</td>';
+								  echo '<td>'.number_format($_faiz, 2, ',', '.').'</td>';
 	  							echo '<td>'.$_kkdf.'</td>';
 	  							echo '<td>'.$_bsmv.'</td>';
 	  							echo '<td>'.number_format($_kalananapara, 2, ',', '.').'</td>';
@@ -91,8 +99,24 @@
 	  							echo '<td>'.number_format($_kalananapara, 2, ',', '.').'</td>';
 	  							echo '</tr>';
   							}
+							  $toplam_faiz = $toplam_faiz + $_faiz;
+							  $toplam_kredi = $toplam_kredi + $taksit;
+							  $toplam_anapara = $toplam_anapara + $_anapara;
+							  $toplam_kkdf = $toplam_kkdf + $_kkdf;
+							  $toplam_bsmv = $toplam_bsmv + $_bsmv;
+
   						}
+						  echo $toplam_faiz;
   					?>
+					    <tr>
+  						<th>Toplam</th>
+  						<th><?php echo $toplam_kredi;?></th>
+  						<th><?php echo $toplam_anapara;?></th>
+						<th><?php echo $toplam_faiz;?></th>
+  						<th><?php echo $toplam_bsmv;?></th>
+  						<th><?php echo $toplam_kkdf;?></th>
+  						<th>0</th>
+  					</tr>
   				</table>
 <?php  } ?>
 <?php if($bsmv==''){
