@@ -32,7 +32,29 @@
 	$toplam_anapara = "0";
 	$toplam_bsmv = "0";
 	$toplam_kkdf = "0";
+	for ($row = '1'; $row <= $vade; $row++) {
+		if ($row == '1') {
+// Birinci Satır
+			$_faiz = $kredi * ($faiz / 100);
+			$_kkdf = $_faiz * $kkdf;
+			$_bsmv = $_faiz * $bsmv;
+			$_anapara = $taksit - ($_faiz + $_kkdf + $_bsmv);
+			$_kalananapara = $kredi - $_anapara;
+		}else{
+// Diğer Satırlar
+			$_faiz = $_kalananapara * ($faiz / 100);
+			$_kkdf = $_faiz * $kkdf;
+			$_bsmv = $_faiz * $bsmv;
+			$_anapara = $taksit - ($_faiz + $_kkdf + $_bsmv);
+			$_kalananapara = $_kalananapara - $_anapara;
+		}
+		$toplam_faiz = $toplam_faiz + $_faiz;
+		$toplam_kredi = $toplam_kredi + $taksit;
+		$toplam_anapara = $toplam_anapara + $_anapara;
+		$toplam_kkdf = $toplam_kkdf + $_kkdf;
+		$toplam_bsmv = $toplam_bsmv + $_bsmv;
 
+	}
 ?>
   				<table class="table table-bordered">
   					<tr>
@@ -106,17 +128,7 @@
 							  $toplam_bsmv = $toplam_bsmv + $_bsmv;
 
   						}
-						  echo $toplam_faiz;
   					?>
-					    <tr>
-  						<th>Toplam</th>
-  						<th><?php echo $toplam_kredi;?></th>
-  						<th><?php echo $toplam_anapara;?></th>
-						<th><?php echo $toplam_faiz;?></th>
-  						<th><?php echo $toplam_bsmv;?></th>
-  						<th><?php echo $toplam_kkdf;?></th>
-  						<th>0</th>
-  					</tr>
   				</table>
 <?php  } ?>
 <?php if($bsmv==''){
